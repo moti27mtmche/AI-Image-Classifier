@@ -1,5 +1,5 @@
 !macro NSIS_HOOK_POSTINSTALL
-  nsExec::ExecToLog 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$INSTDIR\resources\installers\windows\install-service.ps1" -SupervisorExecutable "$INSTDIR\resources\service\supervisor.exe" -DataDirectory "$PROGRAMDATA\LocalAIImageFilter"'
+  nsExec::ExecToLog 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$INSTDIR\installers\windows\install-service.ps1" -SupervisorExecutable "$INSTDIR\resources\service\supervisor.exe" -DataDirectory "$PROGRAMDATA\LocalAIImageFilter"'
   Pop $0
   ${If} $0 != 0
     Abort "The supervisor service could not be installed."
@@ -17,7 +17,7 @@
     ${IfNot} ${FileExists} "$PROGRAMDATA\LocalAIImageFilter\uninstall-authorization.token"
       Abort "Authorize uninstall from the Local AI Image Filter application first."
     ${EndIf}
-    nsExec::ExecToLog 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$INSTDIR\resources\installers\windows\uninstall-service.ps1" -AuthorizationFile "$PROGRAMDATA\LocalAIImageFilter\uninstall-authorization.token" -FilterCtlExecutable "$INSTDIR\resources\service\filterctl.exe"'
+    nsExec::ExecToLog 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "$INSTDIR\installers\windows\uninstall-service.ps1" -AuthorizationFile "$PROGRAMDATA\LocalAIImageFilter\uninstall-authorization.token" -FilterCtlExecutable "$INSTDIR\resources\service\filterctl.exe"'
     Pop $0
     ${If} $0 != 0
       Abort "Protected uninstall failed; network and certificate recovery must succeed before removal."
